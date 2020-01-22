@@ -23,6 +23,7 @@ class dijkstra():
     
     #initializes nodes and other values
     def __init__(self, width, height):
+        print("running...")
         #init width and height
         self.width = width
         self.height = height
@@ -34,8 +35,20 @@ class dijkstra():
         self.run(self.nodes, self.nodes[0][0])
         
         #package as json file
-        with open('data.txt', 'w') as outfile:
+        with open('sample_data_10x10.txt', 'w') as outfile:
             json.dump(self.package(self.nodes), outfile)
+            
+        self.weights = [[self.nodes[i][j].weight for i in range(self.width)] for j in range(self.height)]
+        ##package as json file
+        with open('sample_data_weights_pretty_10x10.txt', 'w') as outfile:
+            for row in self.weights:
+                outfile.write(str(row) + "\n")
+        
+        print("json saved to data.txt \n")
+        print("weight graph saved to data_weights_pretty.txt")
+        
+        input("press any key to close")
+            
 
     #takes in Q and returns the smallest valued node
     def findSmallestNode(self, Graph):
@@ -119,4 +132,13 @@ class dijkstra():
                 i += 1
         
         return json_total
-dij = dijkstra(10, 10)
+def run():
+    
+    try:
+        width = int(input("enter width: "))
+        height = int(input("enter height: "))
+    except:
+        print("please enter integer values!")
+        run()
+    dij = dijkstra(width, height)
+run()
